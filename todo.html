@@ -27,15 +27,19 @@
 <script>
     const todo = document.querySelector('.todo-component');
 
-    const todoItem = document.createElement('div');
-    todoItem.textContent = 'купить молоко';
-    todoItem.title = todoItem.textContent;
-    todoItem.classList.add('todo-item');
+    function createTodoItem(text) {
+        const todoItem = document.createElement('div');
+        todoItem.textContent = text;
+        todoItem.title = text;
+        todoItem.classList.add('todo-item');
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    todoItem.insertBefore(checkbox, todoItem.firstChild);
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        todoItem.insertBefore(checkbox, todoItem.firstChild);
+
+        return todoItem;
+    }
 
     const todoActive = todo.querySelector('.todo-active');
-    todoActive.appendChild(todoItem);
+    todoActive.appendChild(createTodoItem('купить молоко'));
 </script>
