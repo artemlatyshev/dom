@@ -41,9 +41,14 @@
         `;
 
         const todoItem = fragment.firstElementChild;
+        const checkbox = todoItem.querySelector('input');
 
-        todoItem.querySelector('input').onchange = () => {
-            todoDone.appendChild(todoItem);
+        checkbox.onchange = () => {
+            if (checkbox.checked) {
+                todoDone.appendChild(todoItem);
+            } else {
+                todoActive.appendChild(todoItem);
+            }
         };
         
         return todoItem;
