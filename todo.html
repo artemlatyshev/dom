@@ -9,6 +9,10 @@
     .todo-done {
         background: #ffb;
     }
+    .todo-item {
+        background: #bfb;
+        padding: 10px;
+    }
 </style>
 
 <div id="todo" class="todo-component">
@@ -22,8 +26,7 @@
     const todoItem = document.createElement('div');
     todoItem.textContent = 'купить молоко';
     todoItem.title = todoItem.textContent;
-    todoItem.style.background = '#bfb';
-    todoItem.style.padding = '10px';
+    todoItem.classList.add('todo-item');
 
     const todoActive = todo.querySelector('.todo-active');
     todoActive.appendChild(todoItem);
