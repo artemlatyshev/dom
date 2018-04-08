@@ -26,6 +26,10 @@
 
 <script>
     const todo = document.querySelector('.todo-component');
+    const todoActive = todo.querySelector('.todo-active');
+
+    todoActive.appendChild(createTodoItem('купить молоко'));
+    todoActive.appendChild(createTodoItem('купить хлеб'));
 
     function createTodoItem(text) {
         const fragment = document.createElement('div');
@@ -36,7 +40,4 @@
         `;
         return fragment.firstElementChild;
     }
-
-    const todoActive = todo.querySelector('.todo-active');
-    todoActive.appendChild(createTodoItem('купить молоко'));
 </script>
