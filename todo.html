@@ -28,6 +28,10 @@
     todoItem.title = todoItem.textContent;
     todoItem.classList.add('todo-item');
 
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    todoItem.appendChild(checkbox);
+
     const todoActive = todo.querySelector('.todo-active');
     todoActive.appendChild(todoItem);
 </script>
