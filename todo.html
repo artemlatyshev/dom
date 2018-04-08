@@ -29,14 +29,30 @@
     const todoActive = todo.querySelector('.todo-active');
     const todoDone = todo.querySelector('.todo-done');
 
-    todoActive.appendChild(createTodoItem('купить молоко'));
-    todoActive.appendChild(createTodoItem('купить хлеб'));
+    const items = [
+        { text: 'купить молоко', done: false },
+        { text: 'купить хлеб', done: true },
+        { text: 'купить сыр', done: false },
+    ];
 
-    function createTodoItem(text) {
+    createTodoItems(items);
+
+    function createTodoItems(items) {
+        items.filter(item => !item.done).forEach(item => {
+            todoActive.appendChild(createTodoItem(item));
+        });
+
+        items.filter(item => item.done).forEach(item => {
+            todoDone.appendChild(createTodoItem(item));
+        });
+    }
+
+    function createTodoItem(item) {
         const fragment = document.createElement('div');
         fragment.innerHTML = `
-            <div title="${text}" class="todo-item">
-                <input type="checkbox">${text}
+            <div title="${item.text}" class="todo-item">
+                <input type="checkbox" ${item.done ? 'checked' : ''}>
+                ${item.text}
             </div>
         `;
 
