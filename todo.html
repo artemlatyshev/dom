@@ -18,4 +18,13 @@
 
 <script>
     const todo = document.querySelector('.todo-component');
+
+    const todoItem = document.createElement('div');
+    todoItem.textContent = 'купить молоко';
+    todoItem.title = todoItem.textContent;
+    todoItem.style.background = '#bfb';
+    todoItem.style.padding = '10px';
+
+    const todoActive = todo.querySelector('.todo-active');
+    todoActive.appendChild(todoItem);
 </script>
