@@ -12,6 +12,10 @@
     .todo-item {
         background: #bfb;
         padding: 10px;
+        display: flex;
+    }
+    input {
+        margin: 4px 3px 2px 4px;
     }
 </style>
 
@@ -30,7 +34,7 @@
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    todoItem.appendChild(checkbox);
+    todoItem.insertBefore(checkbox, todoItem.firstChild);
 
     const todoActive = todo.querySelector('.todo-active');
     todoActive.appendChild(todoItem);
