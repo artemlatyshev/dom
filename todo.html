@@ -28,16 +28,13 @@
     const todo = document.querySelector('.todo-component');
 
     function createTodoItem(text) {
-        const todoItem = document.createElement('div');
-        todoItem.textContent = text;
-        todoItem.title = text;
-        todoItem.classList.add('todo-item');
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        todoItem.insertBefore(checkbox, todoItem.firstChild);
-
-        return todoItem;
+        const fragment = document.createElement('div');
+        fragment.innerHTML = `
+            <div title="${text}" class="todo-item">
+                <input type="checkbox">${text}
+            </div>
+        `;
+        return fragment.firstElementChild;
     }
 
     const todoActive = todo.querySelector('.todo-active');
