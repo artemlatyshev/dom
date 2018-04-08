@@ -16,10 +16,6 @@
     }
     .todo-item-archive {
         margin-left: auto;
-        display: none;
-    }
-    .todo-done .todo-item-archive {
-        display: block;
     }
     input {
         margin: 4px 3px 2px 4px;
@@ -45,40 +41,51 @@
     createTodoItems(items);
 
     function createTodoItems(items) {
-        items.filter(item => !item.done).forEach(item => {
-            todoActive.appendChild(createTodoItem(item));
-        });
-
-        items.filter(item => item.done).forEach(item => {
-            todoDone.appendChild(createTodoItem(item));
+        items.forEach(item => {
+            item.done ? createDoneItem(item) : createActiveItem(item);
         });
     }
 
-    function createTodoItem(item) {
-        const fragment = document.createElement('div');
-        fragment.innerHTML = `
+    function createActiveItem(item) {
+        const todoItem = createElement(`
             <div title="${item.text}" class="todo-item">
-                <input type="checkbox" ${item.done ? 'checked' : ''}>
+                <input type="checkbox">
+                ${item.text}
+            </div>
+        `);
+
+        todoItem.querySelector('input').onchange = () => {
+            todoItem.remove();
+            createDoneItem(item);
+        };
+
+        todoActive.appendChild(todoItem);
+    }
+
+    function createDoneItem(item) {
+        const todoItem = createElement(`
+            <div title="${item.text}" class="todo-item">
+                <input type="checkbox" checked>
                 ${item.text}
                 <a class="todo-item-archive" href="javascript:void 0;">архивировать</a>
             </div>
-        `;
+        `);
 
-        const todoItem = fragment.firstElementChild;
-        const checkbox = todoItem.querySelector('input');
-
-        checkbox.onchange = () => {
-            if (checkbox.checked) {
-                todoDone.appendChild(todoItem);
-            } else {
-                todoActive.appendChild(todoItem);
-            }
+        todoItem.querySelector('input').onchange = () => {
+            todoItem.remove();
+            createActiveItem(item);
         };
 
         todoItem.querySelector('.todo-item-archive').onclick = () => {
             todoItem.remove();
         };
         
-        return todoItem;
+        todoDone.appendChild(todoItem);
+    }
+
+    function createElement(html) {
+        const fragment = document.createElement('div');
+        fragment.innerHTML = html;
+        return fragment.firstElementChild;
     }
 </script>
