@@ -27,6 +27,7 @@
 <script>
     const todo = document.querySelector('.todo-component');
     const todoActive = todo.querySelector('.todo-active');
+    const todoDone = todo.querySelector('.todo-done');
 
     todoActive.appendChild(createTodoItem('купить молоко'));
     todoActive.appendChild(createTodoItem('купить хлеб'));
@@ -38,6 +39,13 @@
                 <input type="checkbox">${text}
             </div>
         `;
-        return fragment.firstElementChild;
+
+        const todoItem = fragment.firstElementChild;
+
+        todoItem.querySelector('input').onchange = () => {
+            todoDone.appendChild(todoItem);
+        };
+        
+        return todoItem;
     }
 </script>
