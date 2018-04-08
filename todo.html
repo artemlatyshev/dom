@@ -14,6 +14,13 @@
         padding: 10px;
         display: flex;
     }
+    .todo-item-archive {
+        margin-left: auto;
+        display: none;
+    }
+    .todo-done .todo-item-archive {
+        display: block;
+    }
     input {
         margin: 4px 3px 2px 4px;
     }
@@ -53,6 +60,7 @@
             <div title="${item.text}" class="todo-item">
                 <input type="checkbox" ${item.done ? 'checked' : ''}>
                 ${item.text}
+                <a class="todo-item-archive" href="javascript:void 0;">архивировать</a>
             </div>
         `;
 
@@ -65,6 +73,10 @@
             } else {
                 todoActive.appendChild(todoItem);
             }
+        };
+
+        todoItem.querySelector('.todo-item-archive').onclick = () => {
+            todoItem.remove();
         };
         
         return todoItem;
