@@ -41,9 +41,17 @@
     createTodoItems(items);
 
     function createTodoItems(items) {
-        items.forEach(item => {
-            item.done ? createDoneItem(item) : createActiveItem(item);
-        });
+        items.forEach(createTodoItem);
+    }
+
+    function createTodoItem(item) {
+        const todoItem = item.done ? createDoneItem(item) : createActiveItem(item);
+
+        todoItem.querySelector('input').onchange = () => {
+            todoItem.remove();
+            item.done = !item.done;
+            createTodoItem(item);
+        };
     }
 
     function createActiveItem(item) {
@@ -54,12 +62,8 @@
             </div>
         `);
 
-        todoItem.querySelector('input').onchange = () => {
-            todoItem.remove();
-            createDoneItem(item);
-        };
-
         todoActive.appendChild(todoItem);
+        return todoItem;
     }
 
     function createDoneItem(item) {
@@ -71,16 +75,12 @@
             </div>
         `);
 
-        todoItem.querySelector('input').onchange = () => {
-            todoItem.remove();
-            createActiveItem(item);
-        };
-
         todoItem.querySelector('.todo-item-archive').onclick = () => {
             todoItem.remove();
         };
         
         todoDone.appendChild(todoItem);
+        return todoItem;
     }
 
     function createElement(html) {
