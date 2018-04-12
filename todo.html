@@ -47,11 +47,11 @@
     function createTodoItem(item) {
         const todoItem = item.done ? createDoneItem(item) : createActiveItem(item);
 
-        todoItem.querySelector('input').onchange = () => {
+        todoItem.addEventListener('click', () => {
             todoItem.remove();
             item.done = !item.done;
             createTodoItem(item);
-        };
+        });
     }
 
     function createActiveItem(item) {
@@ -75,9 +75,9 @@
             </div>
         `);
 
-        todoItem.querySelector('.todo-item-archive').onclick = () => {
+        todoItem.querySelector('.todo-item-archive').addEventListener('click', () => {
             todoItem.remove();
-        };
+        });
         
         todoDone.appendChild(todoItem);
         return todoItem;
