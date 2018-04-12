@@ -17,6 +17,10 @@
     .todo-item-archive {
         margin-left: auto;
     }
+    .todo-item-hover {
+        outline: 2px solid blue;
+        cursor: pointer;
+    }
     input {
         margin: 4px 3px 2px 4px;
     }
@@ -52,6 +56,9 @@
             item.done = !item.done;
             createTodoItem(item);
         });
+
+        todoItem.addEventListener('mouseenter', () => todoItem.classList.add('todo-item-hover'));
+        todoItem.addEventListener('mouseleave', () => todoItem.classList.remove('todo-item-hover'));
     }
 
     function createActiveItem(item) {
