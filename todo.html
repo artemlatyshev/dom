@@ -51,7 +51,14 @@
     }
 
     function createTodoItem(item) {
-        const todoItem = item.done ? createDoneItem(item) : createActiveItem(item);
+        const todoItem = createTodoItemElement(item);
+        item.done ? todoDone.insertBefore(todoItem, todoDone.firstChild) : todoActive.appendChild(todoItem);
+
+        const archive = todoItem.querySelector('.todo-item-archive');
+        archive && archive.addEventListener('click', event => {
+            todoItem.remove();
+            event.stopPropagation();
+        });
 
         todoItem.addEventListener('click', () => {
             todoItem.remove();
@@ -75,34 +82,19 @@
         return todoItem;
     }
 
-    function createActiveItem(item) {
-        const todoItem = createElement(`
+    function createTodoItemElement(item) {
+        return createElement(`
             <div title="${item.text}" class="todo-item" tabindex="0">
+            ${ !item.done ? `
                 <input type="checkbox">
                 ${item.text}
-            </div>
-        `);
-
-        todoActive.appendChild(todoItem);
-        return todoItem;
-    }
-
-    function createDoneItem(item) {
-        const todoItem = createElement(`
-            <div title="${item.text}" class="todo-item" tabindex="0">
+            ` : `
                 <input type="checkbox" checked>
                 ${item.text}
                 <a class="todo-item-archive" href="javascript:void 0;">архивировать</a>
+            `}
             </div>
         `);
-
-        todoItem.querySelector('.todo-item-archive').addEventListener('click', event => {
-            todoItem.remove();
-            event.stopPropagation();
-        });
-        
-        todoDone.appendChild(todoItem);
-        return todoItem;
     }
 
     function createElement(html) {
