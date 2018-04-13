@@ -52,19 +52,19 @@
 
     function createTodoItem(item) {
         const todoItem = createTodoItemElement(item);
-        item.done ? todoDone.insertBefore(todoItem, todoDone.firstChild) : todoActive.appendChild(todoItem);
+        place();
 
         todoItem.addEventListener('click', event => {
             if (event.target.matches('.todo-item-archive')) {
-            todoItem.remove();
+                todoItem.remove();
                 event.stopImmediatePropagation();
             }
         });
 
         todoItem.addEventListener('click', () => {
-            todoItem.remove();
             item.done = !item.done;
-            createTodoItem(item).focus();
+            place();
+            render();
         });
 
         todoItem.addEventListener('mouseenter', () => todoItem.classList.add('todo-item-hover'));
@@ -81,6 +81,14 @@
         });
 
         return todoItem;
+
+        function place() {
+            item.done ? todoDone.insertBefore(todoItem, todoDone.firstChild) : todoActive.appendChild(todoItem);
+        }
+
+        function render() {
+            todoItem.innerHTML = createTodoItemElement(item).innerHTML;
+        }
     }
 
     function createTodoItemElement(item) {
