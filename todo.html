@@ -55,20 +55,16 @@
         const todoItem = createTodoItemElement(item);
         place();
 
-        todoItem.addEventListener('click', event => {
-            if (event.target.matches('.todo-item-archive')) {
-                item.archived = true;
-                render();
-                event.stopImmediatePropagation();
-            }
+        handle(todoItem, 'click', '.todo-item-archive', event => {
+            item.archived = true;
+            render();
+            event.stopImmediatePropagation();
         });
 
-        todoItem.addEventListener('click', event => {
-            if (event.target.matches('.todo-item-remove')) {
-                todoItem.remove();
-                render();
-                event.stopImmediatePropagation();
-            }
+        handle(todoItem, 'click', '.todo-item-remove', event => {
+            todoItem.remove();
+            render();
+            event.stopImmediatePropagation();
         });
 
         todoItem.addEventListener('click', () => {
@@ -124,5 +120,13 @@
         const fragment = document.createElement('div');
         fragment.innerHTML = html;
         return fragment.firstElementChild;
+    }
+
+    function handle(element, eventName, selector, handler) {
+        element.addEventListener(eventName, event => {
+            if (event.target.matches(`${selector}, ${selector} *`)) {
+                handler(event);
+            }
+        });
     }
 </script>
