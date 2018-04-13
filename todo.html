@@ -39,6 +39,11 @@
     const todoActive = todo.querySelector('.todo-active');
     const todoDone = todo.querySelector('.todo-done');
 
+    let draggedItem;
+    todo.addEventListener('dragover', event => event.preventDefault());
+    todoActive.addEventListener('drop', () => draggedItem.done = false);
+    todoDone.addEventListener('drop', () => draggedItem.done = true);
+
     const items = [
         { text: 'купить молоко', done: false },
         { text: 'купить хлеб', done: true },
@@ -87,6 +92,22 @@
             }
         });
 
+        todoItem.addEventListener('dragstart', event => {
+            if (item.archived) {
+                event.preventDefault();
+            } else {
+                event.dataTransfer.setData('text/plain', 'data');
+                draggedItem = item;
+            }
+        });
+
+        todoItem.addEventListener('dragend', event => {
+            if (event.dataTransfer.dropEffect === 'move') {
+                place();
+                render();
+            }
+        });
+
         return todoItem;
 
         function place() {
@@ -100,7 +121,7 @@
 
     function createTodoItemElement(item) {
         return createElement(`
-            <div title="${item.text}" class="todo-item" tabindex="0">
+            <div title="${item.text}" class="todo-item" tabindex="0" draggable="true">
             ${ !item.done ? `
                 <input type="checkbox">
                 ${item.text}
