@@ -14,6 +14,7 @@
         padding: 10px;
         display: flex;
     }
+    .todo-item-remove,
     .todo-item-archive {
         margin-left: auto;
     }
@@ -56,12 +57,22 @@
 
         todoItem.addEventListener('click', event => {
             if (event.target.matches('.todo-item-archive')) {
+                item.archived = true;
+                render();
+                event.stopImmediatePropagation();
+            }
+        });
+
+        todoItem.addEventListener('click', event => {
+            if (event.target.matches('.todo-item-remove')) {
                 todoItem.remove();
+                render();
                 event.stopImmediatePropagation();
             }
         });
 
         todoItem.addEventListener('click', () => {
+            if (item.archived) return;
             item.done = !item.done;
             place();
             render();
@@ -97,10 +108,13 @@
             ${ !item.done ? `
                 <input type="checkbox">
                 ${item.text}
-            ` : `
+            ` : !item.archived ? `
                 <input type="checkbox" checked>
                 ${item.text}
                 <a class="todo-item-archive" href="javascript:void 0;">архивировать</a>
+            ` : `
+                ${item.text}
+                <a class="todo-item-remove" href="javascript:void 0;">удалить</a>
             `}
             </div>
         `);
