@@ -54,10 +54,11 @@
         const todoItem = createTodoItemElement(item);
         item.done ? todoDone.insertBefore(todoItem, todoDone.firstChild) : todoActive.appendChild(todoItem);
 
-        const archive = todoItem.querySelector('.todo-item-archive');
-        archive && archive.addEventListener('click', event => {
+        todoItem.addEventListener('click', event => {
+            if (event.target.matches('.todo-item-archive')) {
             todoItem.remove();
-            event.stopPropagation();
+                event.stopImmediatePropagation();
+            }
         });
 
         todoItem.addEventListener('click', () => {
